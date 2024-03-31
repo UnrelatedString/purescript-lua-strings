@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+echo "Building..."
+
+spago build -u '-g corefn'
+
+pslua --foreign-path . --ps-output output --entry Data.Char --lua-output-file dist/Data.Char.lua
+pslua --foreign-path . --ps-output output --entry Data.Char.Gen --lua-output-file dist/Data.Char.Gen.lua
+pslua --foreign-path . --ps-output output --entry Data.String --lua-output-file dist/Data.String.lua
+pslua --foreign-path . --ps-output output --entry Data.String.CaseInsensitive --lua-output-file dist/Data.String.CaseInsensitive.lua
+pslua --foreign-path . --ps-output output --entry Data.String.CodePoints --lua-output-file dist/Data.String.CodePoints.lua
+pslua --foreign-path . --ps-output output --entry Data.String.CodeUnits --lua-output-file dist/Data.String.CodeUnits.lua
+pslua --foreign-path . --ps-output output --entry Data.String.Common --lua-output-file dist/Data.String.Common.lua
+pslua --foreign-path . --ps-output output --entry Data.String.Gen --lua-output-file dist/Data.String.Gen.lua
+pslua --foreign-path . --ps-output output --entry Data.String.NonEmpty --lua-output-file dist/Data.String.NonEmpty.lua
+pslua --foreign-path . --ps-output output --entry Data.String.NonEmpty.CaseInsensitive --lua-output-file dist/Data.String.NonEmpty.CaseInsensitive.lua
+pslua --foreign-path . --ps-output output --entry Data.String.NonEmpty.CodePoints --lua-output-file dist/Data.String.NonEmpty.CodePoints.lua
+pslua --foreign-path . --ps-output output --entry Data.String.NonEmpty.CodeUnits --lua-output-file dist/Data.String.NonEmpty.CodeUnits.lua
+pslua --foreign-path . --ps-output output --entry Data.String.NonEmpty.Internal --lua-output-file dist/Data.String.NonEmpty.Internal.lua
+pslua --foreign-path . --ps-output output --entry Data.String.Pattern --lua-output-file dist/Data.String.Pattern.lua
+pslua --foreign-path . --ps-output output --entry Data.String.Unsafe --lua-output-file dist/Data.String.Unsafe.lua
