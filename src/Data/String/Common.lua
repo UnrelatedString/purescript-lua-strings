@@ -15,7 +15,13 @@ return {
   split = (function(sep)
     return function(s)
       local t = {}
-      for str in s:gmatch("([^" .. sep .. "]+)") do table.insert(t, str) end
+      local pattern
+      if string.len(s) == 0 then
+        pattern = "(.)"
+      else
+        pattern = "([^" .. sep .. "]+)"
+      end
+      for str in s:gmatch(pattern) do table.insert(t, str) end
       return t
     end
   end),
