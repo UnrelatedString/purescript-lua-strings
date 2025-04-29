@@ -12,18 +12,16 @@ return {
   replaceAll = (function(pattern)
     return function(replacement) return function(string) return string:gsub(pattern, replacement) end end
   end),
-  split = (function(sep)
-    return function(s)
-      local t = {}
-      local pattern
-      if string.len(s) == 0 then
-        pattern = "(.)"
-      else
-        pattern = "([^" .. sep .. "]+)"
-      end
-      for str in s:gmatch(pattern) do table.insert(t, str) end
-      return t
+  findSubstringFrom = (function(pattern, in, from, just, nothing)
+    local start = string.find(in, pattern, from, true)
+    if start == nil then
+      return nothing
+    else
+      return just(start)
     end
+  end),
+  grabSubstringIGuess = (function(s, i, j)
+    return string.sub(s, i, j)
   end),
   toLower = (function(s) return s:lower() end),
   toUpper = (function(s) return s:upper() end),

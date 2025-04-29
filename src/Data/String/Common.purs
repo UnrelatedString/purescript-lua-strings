@@ -12,7 +12,11 @@ module Data.String.Common
 
 import Prelude
 
+import Control.Monad.ST (ST)
 import Data.String.Pattern (Pattern, Replacement)
+import Data.Function.Uncurried (Fn5, runFn5)
+import Data.Array.ST as STAr
+import Data.Maybe (Maybe(..))
 
 -- | Returns `true` if the given string is empty.
 -- |
@@ -56,13 +60,26 @@ foreign import replace :: Pattern -> Replacement -> String -> String
 -- | ```
 foreign import replaceAll :: Pattern -> Replacement -> String -> String
 
+foreign import findSubstringFrom :: Fn5 Pattern String Int (Int -> Maybe Int) (Maybe Int) Maybe Int
+
+foreign import grabSubstringIGuess :: Fn3 String Int Int String
+
 -- | Returns the substrings of the second string separated along occurences
 -- | of the first string.
 -- |
 -- | ```purescript
 -- | split (Pattern " ") "hello world" == ["hello", "world"]
 -- | ```
-foreign import split :: Pattern -> String -> Array String
+split :: Pattern -> String -> Array String
+split sep str = STAr.run $ split' STAr.new 1
+  where split' :: forall h. STAr.STArray h String -> Int -> ST h (STAr.STArray h String)
+        split' a i
+          | Just at <- runFn5 findSubstringFrom sep str i Just Nothing =
+            do
+              let 
+              STAr.push chunk a
+              split' a i'
+          | otherwise = a
 
 -- | Returns the argument converted to lowercase.
 -- |
